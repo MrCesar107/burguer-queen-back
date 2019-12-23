@@ -1,22 +1,11 @@
-const express = require('express');
-const app = express();
-const bodyParser = require('body-parser');
-const cors = require('cors');
-const mongoose = require('mongoose');
-const PORT = 4000;
+require('dotenv').config();
 
-app.use(cors());
-app.use(bodyParser.json());
+const app = require('./src/app');
+require('./src/database');
 
-mongoose.connect('mongodb://127.0.0.1:27017/burguer_queen', {
-  useNewUrlParser: true
-});
+async function main() {
+  await app.listen(app.get('port'));
+  console.log(`Server is running on port ${app.get('port')}`);
+}
 
-const connection = mongoose.connection;
-connection.once('open', () => {
-  console.log("MongoDB connection establishied successfully");
-});
-
-app.listen(PORT, () => {
-  console.log(`Server is running on port: ${PORT}`);
-});
+main();
