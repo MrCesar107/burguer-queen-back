@@ -2,7 +2,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require("jsonwebtoken");
 
 // Waiter model
-const Waiter = require('../db/models/index').WaiterModel;
+const Waiter = require('../db/models/waiter')
 
 // Load validation
 const validateRegisterInput = require('../../src/validation/register');
