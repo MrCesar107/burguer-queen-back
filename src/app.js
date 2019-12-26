@@ -16,11 +16,14 @@ app.set('port', process.env.SERVER_PORT || 4000);
 const waiters = require('./routes/api/v1/waiters');
 const menus = require('./routes/api/v1/menus');
 const items = require('./routes/api/v1/items');
+const orders = require('./routes/api/v1/orders');
 
 app.use('/api/v1/waiters', waiters);
 app.use('/api/v1/menus', passport.authenticate('jwt', { session: false }),
         menus);
 app.use('/api/v1/items', passport.authenticate('jwt', { session: false }),
         items);
+app.use('/api/v1/orders', passport.authenticate('jwt', { session: false }),
+        orders);
 
 module.exports = app;
