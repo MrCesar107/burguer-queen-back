@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+const { Schema } = mongoose;
 
 const itemSchema = new Schema({
   name: {
@@ -19,7 +19,7 @@ const itemSchema = new Schema({
     required: true,
   },
 
-  total_units: {
+  totalUnits: {
     type: Number,
     required: true,
   },

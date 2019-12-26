@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const itemSchema = require('../schemas/waiterSchema');
+const itemSchema = require('../schemas/itemSchema');
 
 const itemModel = mongoose.model('items', itemSchema);
 

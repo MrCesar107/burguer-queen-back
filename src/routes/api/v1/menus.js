@@ -3,7 +3,7 @@ const router = express.Router();
 
 
 // Menus contoller
-const menusController = require('../../../controllers/menuController');
+const menusController = require('../../../controllers/menusController');
 
 // @route GET api/v1/menus/
 // @desc get all menus
