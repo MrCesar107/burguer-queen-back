@@ -8,3 +8,9 @@ const MenuSchema = new Schema({
     required: true,
   },
 });
+
+mongoose.Types.ObjectId.prototype.valueOf = () => {
+  return this.toString();
+}
+
+module.exports = MenuSchema;

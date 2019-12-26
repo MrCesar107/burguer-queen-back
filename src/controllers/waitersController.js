@@ -37,7 +37,7 @@ module.exports = {
             newWaiter
               .save()
               .then(waiter => res.json(waiter))
-              .catch(err => console.error(err));
+              .catch(err => res.status(500).json(err))
           });
         });
       }

@@ -14,6 +14,10 @@ app.set('port', process.env.SERVER_PORT || 4000);
 
 // Routes
 const waiters = require('./routes/api/v1/waiters');
+const menus = require('./routes/api/v1/menus');
+
 app.use('/api/v1/waiters', waiters);
+app.use('/api/v1/menus', passport.authenticate('jwt', { session: false }),
+        menus);
 
 module.exports = app;
