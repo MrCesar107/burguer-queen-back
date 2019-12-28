@@ -15,12 +15,12 @@ module.exports = {
 
     // Check validation
     if (!isValid) {
-      return res.status(400).json(errors);
+      return res.status(500).json(errors);
     }
 
     Waiter.findOne({ email: req.body.email }).then(user => {
       if (user) {
-        return res.status(400).json({ email: "Email already exists" });
+        return res.status(500).json({ email: "Email already exists" });
       } else {
         const newWaiter = new Waiter({
           name: req.body.name,

@@ -7,6 +7,11 @@ const MenuSchema = new Schema({
     trim: true,
     required: true,
   },
+
+  items: [{
+    type: Schema.Types.ObjectId,
+    ref: 'items',
+  }],
 });
 
 mongoose.Types.ObjectId.prototype.valueOf = () => {
