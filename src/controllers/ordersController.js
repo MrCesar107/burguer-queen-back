@@ -14,6 +14,20 @@ const addOrderToWaiters = (orderData, waiterData) => {
   });
 }
 
+const addItemsToOrder = (itemsData, orderData) => {
+  return new Promise((resolve, reject) => {
+    itemsData.forEach(item => {
+      Order.findByIdAndUpdate(
+        orderData.id,
+        { $push: { items: item.id } },
+        { new: true }
+      ).exec()
+       .then()
+       .catch((err) => reject(err));
+    });
+  });
+}
+
 const removeOrderToWaiters = (orderData, waiterData) => {
   return new Promise((resolve, reject) => {
     Waiter.findByIdAndUpdate(
@@ -33,19 +47,27 @@ module.exports = {
   },
 
   create: async (req, res) => {
-    const { total } = req.body;
+    const { total, items } = req.body;
     const { authorization } = req.headers;
     const token = authorization.substr(7);
     const newOrder = new Order({ total });
     await newOrder.save();
+    addItemsToOrder(items, newOrder)
     addOrderToWaiters(newOrder, jwt.decode(token));
     res.json(newOrder);
   },
 
   update: async (req, res) => {
-    const { total } = req.body
-    const newOrder = { total };
-    await Order.findByIdAndUpdate(req.params.orderId, newOrder);
+    const { total, items } = req.body
+    await Order.findByIdAndUpdate(req.params.orderId,
+      { $set: { items: [] } },
+      { multi: true }
+    ).catch(err => res.status(500).json({ error: err }));
+    await Order.findByIdAndUpdate(req.params.orderId,
+      { total: total,
+        $push: { items: { $each: items } }
+      }
+    ).catch(err => res.status(500).json({ error: err }));
     res.json({ message: 'Order has been updated' });
   },
 
