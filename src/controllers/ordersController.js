@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const Order = require('../db/models/order');
 const Waiter = require('../db/models/waiter');
+const Item = require('../db/models/item');
 
 const addOrderToWaiters = (orderData, waiterData) => {
   return new Promise((resolve, reject) => {
@@ -44,6 +45,23 @@ module.exports = {
   index: async (req, res) => {
     const orders = await Order.find();
     res.json({ orders: orders });
+  },
+
+  getOrder: async(req, res) => {
+    const order = await Order.findById(req.params.orderId);
+    const items = await Item.find({
+      '_id': {
+        $in: order.items,
+      }
+    }).catch((err) => { res.status(500).json({ "error": err }) });
+
+    order.items = items;
+
+    if(order) {
+      res.json({order: order})
+    } else {
+      json.status(400).json({ error: 'Order not found' });
+    }
   },
 
   create: async (req, res) => {

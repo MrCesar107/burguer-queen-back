@@ -11,6 +11,13 @@ router.get('/', (req, res) => {
   ordersController.index(req, res);
 });
 
+// @route GET /api/v1/orders/:orderId/
+// @desc Get an order
+// @access Private
+router.get('/:orderId', (req, res) => {
+  ordersController.getOrder(req, res);
+});
+
 // @route POST /api/v1/orders/create/:orderId/
 // @desc Create an order
 // @access Private

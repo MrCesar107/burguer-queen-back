@@ -11,6 +11,13 @@ router.get('/', (req, res) => {
   menusController.index(req, res);
 });
 
+// @route GET api/v1/menus/:id
+// @desc get menu
+// @access Private
+router.get('/:menuId', (req, res) => {
+  menusController.getMenu(req, res);
+});
+
 // @route POST api/v1/menus/create/
 // @desc create a menu
 // @access Private

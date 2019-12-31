@@ -1,4 +1,6 @@
 const Menu = require('../db/models/menu');
+const Item = require('../db/models/item');
+const mongoose = require('mongoose');
 
 const addItemsToMenu = (itemsData, menuData) => {
   return new Promise((resolve, reject) => {
@@ -22,6 +24,23 @@ module.exports = {
 
     if(menus) {
       res.json({ menus: menus });
+    }
+  },
+
+  getMenu: async (req, res) => {
+    const menu = await Menu.findById(req.params.menuId);
+    const items = await Item.find({
+      '_id': {
+        $in: menu.items
+      }
+    });
+
+    menu.items = items;
+
+    if(menu) {
+      res.json({ menu: menu });
+    } else {
+      res.status(400).json({ error: 'Menu not found' })
     }
   },
 
