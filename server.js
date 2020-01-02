@@ -1,6 +1,6 @@
 // Uncomment this line if you are using this app on development env.
 // Comment it again when you deploy to production.
-require('dotenv').config();
+// require('dotenv').config();
 
 const app = require('./src/app');
 require('./src/database');

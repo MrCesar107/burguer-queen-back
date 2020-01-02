@@ -10,7 +10,7 @@ app.use(passport.initialize());
 
 require('../config/passport')(passport);
 
-app.set('port', process.env.SERVER_PORT || 4000);
+app.set('port', process.env.PORT || 4000);
 
 // Routes
 const waiters = require('./routes/api/v1/waiters');
