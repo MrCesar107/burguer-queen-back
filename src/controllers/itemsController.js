@@ -7,7 +7,7 @@ module.exports = {
     });
 
     if(items) {
-      res.json({ items: items });
+      res.json(items);
     }
   },
 

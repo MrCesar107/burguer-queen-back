@@ -1,6 +1,5 @@
 const Menu = require('../db/models/menu');
 const Item = require('../db/models/item');
-const mongoose = require('mongoose');
 
 const addItemsToMenu = (itemsData, menuData) => {
   return new Promise((resolve, reject) => {
@@ -16,15 +15,25 @@ const addItemsToMenu = (itemsData, menuData) => {
   });
 }
 
+const getMenuItems = async (menu) => {
+  return await Item.find({
+    '_id': {
+      $in: menu.items
+    }
+  });
+}
+
 module.exports = {
   index: async (req, res) => {
     const menus = await Menu.find().catch(() => {
       res.status(500).json({ error: 'An error has ocurred' });
     });
 
-    if(menus) {
-      res.json({ menus: menus });
-    }
+    const items = menus.map((menu) => {
+      getMenuItems(menu).then((items) => { res.json({ menus: menus, items: items }) });
+    });
+
+    //res.json(menus)
   },
 
   getMenu: async (req, res) => {
